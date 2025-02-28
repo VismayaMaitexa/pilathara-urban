@@ -1,0 +1,161 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Service Job Portal</title>
+    <!-- Bootstrap core CSS -->
+   
+    <style>
+      body {
+    font-family: 'Poppins', sans-serif;
+    color: #343a40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjusted to fit the viewport height */
+    margin: 0;
+    background-image: url('/static/assets/images/blog/bg.png'); /* Path to your image */
+    background-size: cover;
+    background-position: center;
+}
+
+.hero_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%; /* Full viewport height */
+}
+
+.detail-box {
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 500px; /* Adjust the width for a compact look */
+    width: 100%;
+    background-color: rgba(167, 162, 162, 0.95); /* Slightly opaque background */
+    text-align: center;
+}
+
+.detail-box h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #052e51;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fff; /* White color for labels */
+    display: block; /* Ensure labels are above the input fields */
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input:focus {
+    border-color: #052e51;
+    outline: none;
+}
+
+.button input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #05434f;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button input:hover {
+    background-color: #052e51;
+}
+
+.register p {
+    margin: 5px 0;
+}
+
+.register-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+        <!-- Header section starts -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container">
+                    
+                  
+                    <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+                        <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                            
+                            <ul class="user_option navbar-nav">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- End header section -->
+
+        <!-- Slider section -->
+        <section class="slider_section">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-4 offset-md-4">
+                                    <div class="detail-box">
+                                        <h1>Login</h1>
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <!-- <h2 class="form-title">Admin Login</h2> -->
+                                            <label for="username">Username:</label>
+                                            {% render_field form.username class='input' %}
+                                            <label for="password">Password:</label>
+                                            {% render_field form.password class='input' %}
+                                            <div class="button">
+                                                <input type="submit" value="Login">
+                                            </div>
+                                            <div class="register"></div>
+                                                <p>Does not have an account?</p>
+                                                <p><a href="{% url 'worker-signup' %}" class="register-link">Register</a></p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

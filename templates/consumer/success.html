@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: url("{% static 'assets/images/blog/pay.png' %}") no-repeat center center fixed;
+            background-size:  100% 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #28a745;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #f9f9f9;
+            color: #555;
+        }
+
+        .no-payment-info {
+            font-style: italic;
+            color: #d9534f;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #085760;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Details</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Customer</th>
+                    <th>Amount Paid</th>
+                    <th>Payment Date</th>
+                    <th>Payment Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.consumer.user.username }}</td>  <!-- Corrected to use 'consumer' to access the 'User' -->
+                    <td>{% if payment %}{{ payment.amount }}{% else %}Not Available{% endif %}</td>
+                    <td>{% if payment %}{{ payment.created_at }}{% else %}Not Available{% endif %}</td>  <!-- Changed payment_date to created_at -->
+                    <td>{% if payment %}{{ payment.card_number }}{% else %}Not Available{% endif %}</td>  <!-- Assuming payment_method is card_number -->
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/" class="button">Homepage</a>
+    </div>
+</body>
+</html>

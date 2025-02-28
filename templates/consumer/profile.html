@@ -1,0 +1,91 @@
+{% load widget_tweaks %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+
+    <title>Local Service Job Portal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full height for the background */
+            background-color: #f0f0f0;
+            /* background: linear-gradient(to bottom right, rgba(198, 196, 196, 0.7), rgb(244, 244, 244)); */
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Stack elements vertically */
+        }
+        header {
+            display: flex;
+            justify-content: space-between; /* Space between items */
+            align-items: center; /* Center items vertically */
+            width: 100%; /* Ensure header takes full width */
+            padding: 20px; /* Adjust padding for header */
+            position: relative; /* Positioning for header */
+            z-index: 10; /* Ensure header is above background */
+            background-color: black;
+        }
+        nav {
+            display: flex; /* Make nav a flex container */
+            align-items: center; /* Center items vertically */
+            width: 100%; /* Ensure nav takes full width */
+            /* background-color: black; */
+            position: relative;
+        }
+        nav a {
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-weight: bold; /* Bold for the main link */
+            font-size: 20px; /* Set font size */
+            text-decoration: none;
+            margin-right: auto; /* Pushes the other items to the right */
+            margin-left: 5px;
+            margin-top: 15px;
+        }
+        .navbar {
+            display: flex; /* Make navbar a flex container */
+            align-items: center; /* Center items vertically */
+        }
+        .nav-item a {
+            font-weight: normal; /* Normal font for nav-item links */
+            margin-left: 35px; /* Space between nav items */
+            color: white; /* Ensure nav item links are white */
+        }
+        .message h2{
+            /* padding-left: 10px; */
+            margin-top: 13%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href=""><span>LOCALSERVICEJOBPORTAL</span></a>
+            <div class="navbar">
+                <!-- <div class="nav-item"><a href="{% url 'search' %}"><i class="fas fa-search"></i></a></div> -->                 
+                <!-- <div class="nav-item"><a href="{% url 'cart' %}">Cart</a><span class="item-number">{{ service_count_in_cart }}</span></div> -->                             
+                <div class="nav-item"><a href="{% url 'consumer-dashboard' %}">Back</a></div>
+                <div class="nav-item"><a href=""><i class="fas fa-user-circle"></i></a></div>
+                <div class="nav-item"><a href=""></a></div>
+                <div class="nav-item"><a href=""></a></div>
+            </div>
+        </nav>
+    </header>
+    <div class="card">
+        <h2>Your Profile</h2>
+
+        <div class="card-body">
+            <p><img src="{% static consumer.profile_pic.url %}" alt="{{ consumer.user.username }}'s profile pic"></p>
+            <h2>{{ consumer.user.username }}</h2>
+            <p>Name: {{ consumer.get_name }}</p>
+            <p>Phone: {{ consumer.phone }}</p>
+            <p>City: {{ consumer.city }}</p>
+            <p><a href=""><i class="fas fa-edit"></i></a></p>
+        </div>
+    </div>
+</body>
+</html>

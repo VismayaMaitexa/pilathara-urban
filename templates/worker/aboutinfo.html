@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About and Add Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .about-section, .add-image-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], input[type="file"], textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About and Add Images</h1>
+    </header>
+    <main>
+        <section class="about-section">
+            <h2>About Section</h2>
+            <form id="aboutForm">
+                <label for="aboutText">Enter About Information:</label>
+                <textarea id="aboutText" rows="5" placeholder="Write about yourself or the topic..."></textarea>
+                <button type="button" onclick="saveAbout()">Save About</button>
+            </form>
+            <div id="aboutDisplay" style="margin-top: 20px;"></div>
+        </section>
+
+        <section class="add-image-section">
+            <h2>Add Image</h2>
+            <form id="imageForm">
+                <label for="imageTitle">Image Title:</label>
+                <input type="text" id="imageTitle" placeholder="Enter image title">
+
+                <label for="imageFile">Choose Image:</label>
+                <input type="file" id="imageFile" accept="image/*">
+
+                <button type="button" onclick="addImage()">Add Image</button>
+            </form>
+            <div id="imageGallery" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;"></div>
+        </section>
+    </main>
+
+    <script>
+        function saveAbout() {
+            const aboutText = document.getElementById('aboutText').value;
+            const aboutDisplay = document.getElementById('aboutDisplay');
+
+            if (aboutText.trim() !== '') {
+                aboutDisplay.innerHTML = `<p>${aboutText}</p>`;
+                document.getElementById('aboutForm').reset();
+            } else {
+                alert('Please enter some text in the About section.');
+            }
+        }
+
+        function addImage() {
+            const imageTitle = document.getElementById('imageTitle').value;
+            const imageFile = document.getElementById('imageFile').files[0];
+            const imageGallery = document.getElementById('imageGallery');
+
+            if (imageTitle.trim() !== '' && imageFile) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgCard = document.createElement('div');
+                    imgCard.innerHTML = `
+                        <div style="text-align: center;">
+                            <img src="${e.target.result}" alt="${imageTitle}" style="max-width: 100%; border-radius: 5px;">
+                            <p>${imageTitle}</p>
+                        </div>
+                    `;
+                    imageGallery.appendChild(imgCard);
+                };
+                reader.readAsDataURL(imageFile);
+
+                document.getElementById('imageForm').reset();
+            } else {
+                alert('Please provide both an image title and file.');
+            }
+        }
+    </script>
+</body>
+</html>

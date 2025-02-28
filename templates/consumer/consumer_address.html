@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Address</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% load static %}
+    <style>
+        body {
+            background: url("{% static 'assets/images/blog/address.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+    margin-top: 50px;
+    max-width: 600px;
+    background-color: rgba(72, 227, 219, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-left: auto; /* Pushes the container to the right */
+    margin-right: 100px; /* Adds some space from the right edge */
+}
+
+
+        h2 {
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #34d7cf;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <h2>Enter Shipping Address</h2>
+
+        <!-- Address Form Section -->
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Input field for Email -->
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name" required>
+                    </div>
+
+                    <!-- Input field for Mobile -->
+                    <div class="form-group">
+                        <label for="mobile">Mobile</label>
+                        <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" required pattern="[0-9]{10}">
+                    </div>
+
+                    <!-- Input field for Address -->
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter your address" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Proceed to Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

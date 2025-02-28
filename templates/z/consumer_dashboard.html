@@ -1,0 +1,384 @@
+{% load widget_tweaks %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+
+    <title>Local Service Job Portal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full height for the background */
+            /* background-color: #f0f0f0; */
+            background-color: darkgrey;
+            /* background: linear-gradient(to bottom right, rgba(198, 196, 196, 0.7), rgb(244, 244, 244)); */
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Stack elements vertically */
+        }
+        header {
+            display: flex;
+            justify-content: space-between; /* Space between items */
+            align-items: center; /* Center items vertically */
+            width: 100%; /* Ensure header takes full width */
+            padding: 20px; /* Adjust padding for header */
+            position: relative; /* Positioning for header */
+            z-index: 10; /* Ensure header is above background */
+            background-color: black;
+        }
+        nav {
+            display: flex; /* Make nav a flex container */
+            align-items: center; /* Center items vertically */
+            width: 100%; /* Ensure nav takes full width */
+            /* background-color: black; */
+            position: relative;
+        }
+        nav a {
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-weight: bold; /* Bold for the main link */
+            font-size: 20px; /* Set font size */
+            text-decoration: none;
+            margin-right: auto; /* Pushes the other items to the right */
+            margin-left: 5px;
+            margin-top: 15px;
+        }
+        .navbar {
+            display: flex; /* Make navbar a flex container */
+            align-items: center; /* Center items vertically */
+        }
+        .nav-item a {
+            font-weight: normal; /* Normal font for nav-item links */
+            margin-left: 35px; /* Space between nav items */
+            color: white; /* Ensure nav item links are white */
+        }
+
+
+        .leftbar {
+            background-color: #ff9f01;
+            width: 17vw;
+            height: 120vh;
+            padding-top: 20px;
+        }
+    .leftbar ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column; /* Align items vertically */
+    }
+
+    .left li {
+        /* padding: 15px 0; */
+        text-align: center;
+        margin: 0; /* Reset margin */
+        border-bottom: 2px solid #ed8b0a; /* Light border */
+        transition: background-color 0.3s; /* Smooth transition for hover effect */
+    }
+
+    .left li:hover {
+        background-color: #ff9419;
+    }
+    .left li:last-child {
+        border-bottom: none; /* Remove border from last item */
+    }
+
+    .leftbar a {
+        color: #495057; /* Dark gray for links */
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500; /* Slightly bolder font weight */
+        display: block; /* Full-width clickable area */
+        transition: color 0.3s, background-color 0.3s; /* Smooth transition */
+        border-radius: 4px; /* Slightly rounded corners */
+        padding: 15px 25px; /* Padding around the text */
+    }
+
+    .left a.active {
+        color: rgb(189, 187, 187); /* Accent color for active link */
+        color: black; /* White text for active link */
+    }
+
+    .left a:hover {
+        background-color: rgba(237, 86, 59, 0.1); /* Light accent on hover */
+        color: #ed563b; /* Change text color on hover */
+    }
+
+    .container {
+            margin-left: 8vw;
+            padding: 20px;
+            /* width: calc(100% - 17vw);
+            height: calc(100vh - 100px); */
+            overflow-y: auto;
+            position: relative;
+            top: 10px;
+        }
+        .form-body {
+            display: flex; /* Use flexbox for layout */
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: flex-start; /* Align items to the start */
+        }
+        .service-card {
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px; /* Space between cards */
+            width: 300px; /* Fixed width for cards */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .service-card h3 {
+            margin: 10px 0;
+        }
+        .pic img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .btn {
+            margin-top: 10px;
+        }
+        .button {
+            margin: 0 5px;
+            color: #ffffff;
+            /* background-color: #007bff; */
+            color: #ed563b;
+            border: none;
+            border-radius: 4px;
+            /* padding: 8px 12px; */
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            color: #495057;
+        }
+        .form-body ul {
+            list-style-type: none;
+            float: left;
+        }
+        .search-wrapper {
+    position: relative; /* Positioning context for the icon */
+}
+
+.navbar-input {
+    padding: 10px 40px 10px 10px; /* Add extra padding for the icon */
+    border: 1px solid #ccc; /* Border for the input */
+    border-radius: 4px; /* Rounded corners */
+    width: 240px; /* Set a fixed width for the input */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+.navbar-button {
+    position: absolute; /* Position the button inside the input */
+    right: 5px; /* Align the button to the right */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for the button's height */
+    background-color: transparent; /* Transparent background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer on hover */
+    padding: 0; /* No padding */
+    color: #555; /* Color for the icon */
+    font-size: 20px;
+}
+.item-number {
+    background-color: red; /* Background color for item number */
+    color: white; /* Text color */
+    border-radius: 50%; /* Circular background */
+    padding: 3px 8px; /* Vertical and horizontal padding */
+    font-size: 14px; /* Increase font size for better visibility */
+    margin-left: 5px; /* Space between number and text */
+    display: inline-flex; /* Use flexbox for centering */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    min-width: 24px; /* Minimum width to maintain circular shape */
+    height: 24px; /* Fixed height for consistency */
+    line-height: 1; /* Ensure line height fits the container */
+    font-weight: bold; /* Bold text for emphasis */
+}
+/**********************************/
+/******** Product Item CSS ********/
+/**********************************/
+.product-item {
+    position: relative;
+    background-color: #f7f7f7;
+    padding-bottom: 15px;
+    border-radius: 10px;
+}
+
+.product-item .product-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.product-item .product-image a {
+    display: block;
+    background: white;
+    margin-bottom: 15px; 
+    transition: .2s;
+}
+
+.product-item:hover .product-image a {
+    background: rgba(63, 105, 170, .5);
+}
+
+.product-item .product-image img {
+    width: 100%; 
+}
+
+.product-item:hover .product-image img {
+    filter: blur(6px);
+}
+
+.product-item .product-image .product-action {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    left: 0;
+    top: 50%;
+    text-align: center;
+    transition: .5s;
+    opacity: 0; 
+}
+
+.product-item:hover .product-image .product-action {
+    top: calc(50% - 25px);
+    opacity: 1; 
+}
+
+.product-item .product-image .product-action a {
+    display: inline-block;
+    width: 200px;
+    height: 30px;
+    /* padding: 6px 0; */
+    padding-top: 10px;
+    margin-right: 5px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    background: #ff9f01;
+}
+
+.product-item .product-image .product-action a:last-child {
+    margin-right: 0;
+}
+
+.product-item .product-image .product-action a:hover {
+    color: #ff9f01;
+    background: #ffffff;
+}
+
+.product-item .product-content {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    background: #f7f7f7;
+}
+
+.product-item .product-content .title {
+    margin-bottom: 5px;
+}
+
+.product-item .product-content .title a {
+    color: #3F69AA;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.product-item .product-content .price {
+    font-size: 30px;
+    color: #3F69AA;
+    font-weight: 700; 
+}
+
+/**********************************/
+/******** Featured Product ********/
+/**********************************/
+.featured-product {
+    position: relative;
+    padding: 45px 0 60px 0;
+}
+
+.recent-product {
+    position: relative;
+    padding: 60px 0;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href=""><span>LOCALSERVICEJOBPORTAL</span></a>
+            <div class="navbar">
+                <!-- <div class="nav-item"><a href="{% url 'search' %}"><i class="fas fa-search"></i></a></div> -->
+                <div class="search-container">
+                    <form action="{% url 'search' %}" method="get">
+                        <div class="search-wrapper">
+                            <input class="navbar-input" type="search" placeholder="Search for all services" name="query" id="query">
+                            <button class="navbar-button" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>                         
+                <!-- <div class="nav-item"><a href="{% url 'cart' %}">Cart</a><span class="item-number">{{ service_count_in_cart }}</span></div> -->
+                <div class="nav-item">
+                    <a href="{% url 'cart' %}">Cart</a>
+                    {% if service_count_in_cart > 0 %}
+                        <span class="item-number">{{ service_count_in_cart }}</span>
+                    {% endif %}
+                </div>                                
+                <div class="nav-item"><a href="{% url 'home' %}">Logout</a></div>
+                <div class="nav-item"><a href="{% url 'consumer-profile' %}"><i class="fas fa-user-circle"></i></a></div>
+                <div class="nav-item"><a href=""></a></div>
+                <div class="nav-item"><a href=""></a></div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="form-body">
+            <div class="form-body">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {% for service in services %}
+                    <ul>
+                        <li class="product-item"> <!-- Added product-item class -->
+                            <div class="product-image"> <!-- Added product-image class -->
+                                <a href="{% url 'add-to-cart' service.id %}"> <!-- Link for add-to-cart action -->
+                                    <img src="{% static service.service_pic.url %}" alt="{{ service.worker.user.username }}'s profile pic">
+                                </a>
+                                <div class="product-action"> <!-- Added product-action class -->
+                                    <a href="{% url 'add-to-cart' service.id %}" class="button"><i class="fas fa-cart-plus">ADD TO CART</i></a>
+                                </div>
+                            </div>
+                            <div class="product-content"> <!-- Added product-content class -->
+                                <h3 class="title">{{ service.worker.user.username }}</h3> <!-- Title -->
+                                <div>{{ service.skills }}</div> <!-- Skills -->
+                                <div>
+                                    <i class="fas fa-map-marker-alt" style="color: #5a5a5a; font-size: 13px;"></i> {{ service.city }} 
+                                </div>
+                                <div class="price"> &#8377; {{ service.service_rate }}</div> <!-- Price -->
+                                <div>
+                                    <i class="fas fa-phone" style="color: #5a5a5a; font-size: 13px;"></i> {{ service.phone }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </form>
+            </div>
+            
+        </div>
+    </div>    
+</body>
+</html>

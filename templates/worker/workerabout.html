@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Worker Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Worker Information</h1>
+        <form method="post" action="{% url 'workerabout' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+        
+            
+            <label for="bio">Biography</label>
+            <textarea id="bio" name="bio" rows="4"></textarea>
+            {% if form.bio.errors %}
+                <div class="error">{{ form.bio.errors.0 }}</div>
+            {% endif %}
+            
+            <label for="workimage1">Work Image 1</label>
+            <input type="file" id="workimage1" name="workimage1">
+            {% if form.workimage1.errors %}
+                <div class="error">{{ form.workimage1.errors.0 }}</div>
+            {% endif %}
+            
+            <label for="workimage2">Work Image 2</label>
+            <input type="file" id="workimage2" name="workimage2">
+            {% if form.workimage2.errors %}
+                <div class="error">{{ form.workimage2.errors.0 }}</div>
+            {% endif %}
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

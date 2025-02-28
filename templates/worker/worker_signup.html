@@ -1,0 +1,210 @@
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Service Job Portal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('/static/assets/images/blog/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero_area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .detail-box {
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .detail-box h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #052e51;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #052e51;
+            display: block;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input:focus {
+            border-color: #05434f;
+            outline: none;
+            box-shadow: 0 0 8px rgba(5, 67, 79, 0.3);
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .form-row .col-md-6 {
+            flex: 1;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .button input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #05434f, #052e51);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .button input:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(5, 46, 81, 0.4);
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register-link {
+            color: #05434f;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-link:hover {
+            color: #052e51;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+        <div class="detail-box">
+            <h1>Signup</h1>
+            <form id="signupForm" action="" method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="name">First name:</label>
+                        {% render_field userform.first_name class='input' %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="username">Username:</label>
+                        {% render_field userform.username class='input' %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="password">Password:</label>
+                        {% render_field userform.password class='input' %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="city">City:</label>
+                        {% render_field workerform.city class='input' %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="skills">Skills:</label>
+                        {% render_field workerform.skills class='input' %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="workexperience">Aadhaar Number:</label>
+                        {% render_field workerform.work_experience class='input' %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="profilepic">Certificate:</label>
+                        {% render_field workerform.profile_pic class='input' %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="servicerate"> Minimum Service rate:</label>
+                        {% render_field workerform.service_rate class='input' %}
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label for="phone">Phone:</label>
+                        {% render_field workerform.phone class='input' id='phone' %}
+                        <span id="phoneError" class="error">Phone number must be exactly 10 digits.</span>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <input type="submit" value="Register" class="btn">
+                </div>
+                <div class="register">
+                    <p>Already have an account? <a href="{% url 'workerlogin' %}" class="register-link">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function (event) {
+            const phoneInput = document.getElementById("phone");
+            const phoneError = document.getElementById("phoneError");
+
+            const phoneValue = phoneInput.value.trim();
+            if (!/^\d{10}$/.test(phoneValue)) {
+                phoneError.style.display = "block";
+                phoneInput.style.borderColor = "red";
+                event.preventDefault();
+            } else {
+                phoneError.style.display = "none";
+                phoneInput.style.borderColor = "";
+            }
+        });
+    </script>
+</body>
+</html>

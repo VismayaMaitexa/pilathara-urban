@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+            max-width: 600px;
+            margin: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            background-color: #0078d7;
+            color: white;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .message.sent {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 70%;
+        }
+
+        .message.sent .message-content {
+            background-color: #0078d7;
+            color: white;
+        }
+
+        .message.received .message-content {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input textarea {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0078d7;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .chat-input button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        worker Chat Room
+    </div>
+    <div class="chat-messages">
+        {% for mes in message %}
+        {% if mes.dynamic_value %}
+        <div class="message received">
+            <div class="message-content">{{mes.message.message}}</div>
+        </div>
+        {% else %}
+        <div class="message sent">
+            <div class="message-content">{{mes.message.message}}</div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <form class="chat-input" method="post" action="{% url 'chat_message' rec_id %}">
+        {% csrf_token %}
+        <textarea rows="1" name="message" placeholder="Type your message..."></textarea>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+</body>
+</html>

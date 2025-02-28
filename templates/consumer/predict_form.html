@@ -1,0 +1,196 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Service Job Portal</title>
+    <!-- External CSS or Bootstrap can be added if needed -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('/static/assets/images/blog/predict.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            background-color: rgba(167, 162, 162, 0.95);
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b4c62;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input:focus {
+            border-color: #095561;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px; /* Adjust spacing between fields */
+            margin-bottom: 20px;
+        }
+
+        .col-md-6 {
+            flex: 1; /* Each field takes half the row */
+        }
+
+        .button input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #184a6e;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button input:hover {
+            background-color: #196776;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Local Services Wage Prediction</h1>
+        <form id="predictionForm" method="POST" action="{% url 'predict' %}">
+            {% csrf_token %}
+            <!-- Row 1 -->
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="service_type">Service Type:</label>
+                    <select id="service_type" name="service_type" class="input" required>
+                        <option value="4">Gardener</option>
+                        <option value="5">Hairdresser</option>
+                        <option value="3">Electrician</option>
+                        <option value="2">Driver</option>
+                        <option value="0">Carpenter</option>
+                        <option value="8">Painter</option>
+                        <option value="6">Maid</option>
+                        <option value="9">Plumber</option>
+                        <option value="10">Security Guard</option>
+                        <option value="12">Tailor</option>
+                        <option value="7">Mechanic</option>
+                        <option value="1">Cook</option>
+                        <option value="11">Sweeper</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="experience_years">Experience (Years):</label>
+                    <input type="number" id="experience_years" name="experience_years" class="input" step="0.1" min="0" max="50" required>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="location">Location:</label>
+                    <select id="location" name="location" class="input" required>
+                        <option value="0">Metro</option>
+                        <option value="1">Rural</option>
+                        <option value="3">Tier-3</option>
+                        <option value="2">Tier-2</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="work_type">Work Type:</label>
+                    <select id="work_type" name="work_type" class="input" required>
+                        <option value="2">Hourly</option>
+                        <option value="0">Contract</option>
+                        <option value="3">Part-time</option>
+                        <option value="1">Full-time</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Row 3 -->
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="education_level">Education Level:</label>
+                    <select id="education_level" name="education_level" class="input" required>
+                        <option value="1">Certified</option>
+                        <option value="0">Basic</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" class="input" step="1" min="18" max="100" required>
+                </div>
+            </div>
+            <!-- Row 4 -->
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="service_rating">Service Rating (1-5):</label>
+                    <input type="number" id="service_rating" name="service_rating" class="input" step="0.1" min="1" max="5" required>
+                </div>
+            </div>
+            <div class="button">
+                <input type="submit" value="Predict">
+            </div>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch("{% url 'predict' %}", {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.prediction) {
+                    document.getElementById('result').innerText = `Predicted Wage: ₹${data.prediction}`;
+                } else if (data.error) {
+                    document.getElementById('result').innerText = `Error: ${data.error}`;
+                }
+            } catch (error) {
+                document.getElementById('result').innerText = 'An error occurred. Please try again.';
+            }
+        });
+    </script>
+</body>
+</html>

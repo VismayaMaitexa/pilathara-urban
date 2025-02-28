@@ -1,0 +1,167 @@
+{% load widget_tweaks %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+    <title>Local Service Job Portal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full height for the background */
+            background-color: #f0f0f0;
+            display: flex; /* Flexbox layout */
+            flex-direction: row; /* Align items in a row */
+        }
+        header {
+            display: flex;
+            justify-content: space-between; /* Space between items */
+            align-items: center; /* Center items vertically */
+            width: 100%; /* Ensure header takes full width */
+            padding: 20px; /* Adjust padding for header */
+            background-color: black;
+            position: fixed; /* Keep header fixed */
+            z-index: 10; /* Ensure header is above background */
+        }
+        nav {
+            display: flex; /* Make nav a flex container */
+            align-items: center; /* Center items vertically */
+            width: 100%; /* Ensure nav takes full width */
+        }
+        nav a {
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-weight: bold; /* Bold for the main link */
+            font-size: 20px; /* Set font size */
+            text-decoration: none;
+            margin-right: auto; /* Pushes the other items to the right */
+            margin-left: 5px;
+            margin-top: 15px;
+        }
+        .navbar {
+            display: flex; /* Make navbar a flex container */
+            align-items: center; /* Center items vertically */
+        }
+        .nav-item a {
+            font-weight: normal; /* Normal font for nav-item links */
+            margin-left: 35px; /* Space between nav items */
+            color: white; /* Ensure nav item links are white */
+        }
+        .leftbar {
+            background-color: #ff9f01;
+            width: 17vw;
+            height: 100vh; /* Adjust to 100vh */
+            padding-top: 100px;
+            position: fixed; /* Fix leftbar to the left */
+        }
+        .leftbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .left {
+            display: flex;
+            flex-direction: column; /* Align items vertically */
+        }
+        .left li {
+            text-align: center;
+            margin: 0; /* Reset margin */
+            border-bottom: 2px solid #ed8b0a; /* Light border */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        .left li:hover {
+            background-color: #ff9419;
+        }
+        .left li:last-child {
+            border-bottom: none; /* Remove border from last item */
+        }
+        .leftbar a {
+            color: #495057; /* Dark gray for links */
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500; /* Slightly bolder font weight */
+            display: block; /* Full-width clickable area */
+            transition: color 0.3s, background-color 0.3s; /* Smooth transition */
+            border-radius: 4px; /* Slightly rounded corners */
+            padding: 15px 25px; /* Padding around the text */
+        }
+        .left a.active {
+            color: black; /* White text for active link */
+        }
+        .left a:hover {
+            background-color: rgba(237, 86, 59, 0.1); /* Light accent on hover */
+            color: #ed563b; /* Change text color on hover */
+        }
+        .card {
+            margin-left: 30vw; /* Leave space for the leftbar */
+            margin-top: 130px; /* Space below the header */
+            width: 40%; /* Set width for the card */
+            height: 72%;
+            padding: 10px; /* Add padding inside the card */
+            background: white; /* White background for the card */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            display: flex; /* Flexbox for centering */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center content */
+            justify-content: flex-start; /* Start stacking */
+        }
+        .form-body {
+            width: 70%; /* Full width for form body */
+        }
+        label {
+            display: block; /* Block display for labels */
+            margin: 10px 0 5px; /* Margin around labels */
+        }
+        .input {
+            width: 90%; /* Full width for inputs */
+            padding: 10px; /* Padding inside inputs */
+            border: 1px solid #ccc; /* Border for inputs */
+            border-radius: 4px; /* Rounded corners for inputs */
+            margin-bottom: 8px; /* Space below inputs */
+        }
+        .button {
+            margin-top: 10px; /* Space above button */
+            margin-left: 40%;
+        }
+        .btn {
+            padding: 10px 20px; /* Padding for button */
+            background-color: #ff9f01; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s; /* Smooth transition */
+        }
+        .btn:hover {
+            background-color: #e68a00; /* Darker on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href=""><span>LOCALSERVICEJOBPORTAL</span></a>
+            <div class="navbar">
+                <div class="nav-item"><a href="{% url 'home' %}">Logout</a></div>
+                <div class="nav-item"><a href="" style="color: red;"><i class="fas fa-user-shield"> Admin</i></a></div>
+                <div class="nav-item"><a href=""></a></div>
+                <div class="nav-item"><a href=""></a></div>
+                <div class="nav-item"><a href=""></a></div>
+            </div>
+        </nav>
+    </header>
+    <div class="leftbar">
+        <ul class="left">
+            <li><a href="" class="active">Home</a></li>
+            <li><a href="{% url 'worker-request' %}"><b>Worker request</b></a></li>
+            <li><a href="{% url 'manage-worker' %}"><b>Manage Worker</b></a></li>
+            <li><a href="{% url 'manage-consumer' %}"><b>Manage Consumer</b></a></li>
+        </ul>
+    </div>
+    
+</body>
+</html>

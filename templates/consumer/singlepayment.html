@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Payment Details</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, table, th, td {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            padding: 20px;
+            background: url("{% static 'assets/images/blog/pay.png' %}") no-repeat center center fixed;
+            background-size:  100% 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #28a745;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #ffffff;
+            color: #555;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .no-payments {
+            font-style: italic;
+            color: #d9534f;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Button for returning to the homepage */
+        .button {
+            display: inline-block;
+            background-color: #0b7191;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            display: block;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            .button {
+                font-size: 1rem;
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body><br><br><br><br><br><br><br><br><br>
+    <div class="container">
+        <h1>My Payment Details</h1>
+
+        {% if payments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Payment Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.booking.id }}</td>
+                            <td>{{ payment.amount }}</td>
+                            <td>{{ payment.status }}</td>
+                            <td>{% if payment %}{{ payment.created_at }}{% else %}Not Available{% endif %}</td>  <!-- Changed payment_date to created_at -->
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-payments">You have no payment records.</p>
+        {% endif %}
+
+        <a href="/" class="button">Return to Homepage</a>
+    </div>
+</body>
+</html>

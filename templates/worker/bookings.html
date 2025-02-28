@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Local Service Job Portal</title>
+    <style>
+        /* Existing styles... */
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh; 
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: row; 
+        }
+        header {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%; 
+            padding: 20px; 
+            background-color: rgb(23, 104, 96);
+            position: fixed; 
+            z-index: 10; 
+        }
+        nav {
+            display: flex; 
+            align-items: center; 
+            width: 100%; 
+        }
+        nav a {
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-weight: bold; 
+            font-size: 20px; 
+            text-decoration: none;
+            margin-right: auto; 
+            margin-left: 5px;
+            margin-top: 15px;
+        }
+        .navbar {
+            display: flex; 
+            align-items: center; 
+        }
+        .nav-item a {
+            font-weight: normal; 
+            margin-left: 35px; 
+            color: white; 
+        }
+        .leftbar {
+            background-color: #27776e;
+            width: 17vw;
+            height: 100vh; 
+            padding-top: 100px;
+            position: fixed; 
+        }
+        .leftbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .left {
+            display: flex;
+            flex-direction: column; 
+        }
+        .left li {
+            text-align: center;
+            margin: 0; 
+            border-bottom: 2px solid #ed8b0a; 
+            transition: background-color 0.3s; 
+        }
+        .left li:hover {
+            background-color: #ff9419;
+        }
+        .left li:last-child {
+            border-bottom: none; 
+        }
+        .leftbar a {
+            background-color: #27776e;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500; 
+            display: block; 
+            transition: color 0.3s, background-color 0.3s; 
+            border-radius: 4px; 
+            padding: 15px 25px; 
+        }
+        .left a.active {
+            color: black; 
+        }
+        .left a:hover {
+            background-color: rgba(237, 86, 59, 0.1); 
+            color: #ed563b; 
+        }
+
+        .card {
+            padding: 20px; /* Adjust internal padding */
+            border-radius: 8px; /* Rounded corners */
+            margin-left: 20vw; /* Center alignment */
+            margin-top: 80px; /* Space from the header */
+            width: 60vw; /* Define a width */
+        }
+        
+        h2 {
+            color: #ed563b; /* Heading color */
+            text-align: center;
+        }
+        table {
+            width: 120%; /* Use full width of card */
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        table th, table td {
+            border: 1px solid #ddd; 
+            padding: 8px; 
+            text-align: center; 
+        }
+        table th {
+            background-color: #f2f2f2; 
+        }
+        table th:first-child,
+        table td:first-child {
+            text-align: left; 
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9; 
+        }
+        table tbody tr:hover {
+            background-color: #f2f2f2; 
+        }
+        table td a {
+            text-decoration: none;
+            color: #1583e9;
+        }
+        table td a:hover {
+            text-decoration: underline;
+            color: #0d5ca7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href=""><span>LOCALSERVICEJOBPORTAL</span></a>
+            <div class="navbar">
+                <div class="nav-item"><a href="{% url 'home' %}">Logout</a></div>
+                <div class="nav-item"><a href="{% url 'worker-profile' %}"><i class="fas fa-user-circle"></i></a></div>
+                <div class="nav-item"><a href=""></a></div>
+                <div class="nav-item"><a href=""></a></div>
+                <div class="nav-item"><a href=""></a></div>
+            </div>
+        </nav>
+    </header>
+    <div class="leftbar">
+        <ul class="left">
+            <li><a href="{% url 'worker-dashboard' %}" class="active" style="color: white;">Home</a></li>
+            <li><a href="{% url 'services' %}" style="color: white;">Services</a></li>
+            <li><a href="{% url 'bookings' %}" style="color: white;">Bookings</a></li>
+        </ul>
+        </ul>
+    </div>
+    <div class="card">
+        <h2>Booking Requests</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Service</th>
+                    <th>Order date</th>
+                    <th>Status</th>
+                    <th>chat</th>
+                    <th>Approve</th>
+                    <th>Reject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service, consumer, booking in data %}
+                <tr>
+                    <td>{{ booking.name }}</td>
+                    <td>{{ booking.mobile }}</td>
+                    <td>{{ booking.address }}</td>
+                    <td>{{ service.skills }}</td> <!-- Assuming skills is a field in the Service model -->
+                    <td>{{ booking.order_date }}</td>
+                    <td>{{ booking.status }}</td>
+                    <td><a href="{% url 'chat' booking.consumer.id %}" class="button"><i class="fa fa-message"></i> chat to consumer</a></td>
+                    <td><a href="{% url 'approve-booking' booking.id %}" class="button"><i class="fas fa-check"></i></a></td>
+                    <td><a href="{% url 'reject-booking' booking.id %}" class="button"><i class="fa fa-close"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+</body>
+</html>

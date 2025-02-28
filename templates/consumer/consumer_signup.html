@@ -1,0 +1,184 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Service Job Portal</title>
+    <!-- Bootstrap core CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('/static/assets/images/blog/bg.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .detail-box {
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            background-color: rgba(195, 187, 187, 0.95);
+        }
+
+        .detail-box h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #052e51;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input:focus {
+            border-color: #ff9f01;
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .form-row .col-md-6 {
+            flex: 1;
+        }
+
+        .button input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0b3845;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button input:hover {
+            background-color: #094059;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+        <section class="slider_section">
+            <div class="carousel slide">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-4 offset-md-4">
+                                    <div class="detail-box">
+                                        <h1>Signup</h1>
+                                        <form id="signupForm" action="" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <label for="firstname">First name:</label>
+                                                    {% render_field userform.first_name class='input' %}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="lastname">Last name:</label>
+                                                    {% render_field userform.last_name class='input' %}
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <label for="username">Username:</label>
+                                                    {% render_field userform.username class='input' %}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="password">Password:</label>
+                                                    {% render_field userform.password class='input' %}
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <label for="profilepic">Profile Picture:</label>
+                                                    {% render_field consumerform.profile_pic class='input' %}
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="phone">Phone:</label>
+                                                    {% render_field consumerform.phone id="phone" class='input' %}
+                                                    <p class="error-message" id="phoneError">Phone number must be exactly 10 digits.</p>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <label for="city">City:</label>
+                                                    {% render_field consumerform.city class='input' %}
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="button">
+                                                <input type="submit" value="Register" class="btn">
+                                            </div>
+                                        
+                                            <div class="register">
+                                                <p>Already have an account?</p>
+                                                <p><a href="{% url 'consumerlogin' %}" class="register-link">Login</a></p>
+                                            </div>
+                                        </form>
+                                    </div>                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            const phoneInput = document.getElementById('phone');
+            const phoneError = document.getElementById('phoneError');
+
+            if (!/^\d{10}$/.test(phoneInput.value)) {
+                phoneError.style.display = 'block';
+                e.preventDefault(); // Prevent form submission
+            } else {
+                phoneError.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
